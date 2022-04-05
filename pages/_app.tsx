@@ -18,6 +18,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         {/* <title>Hack</title> */}
 
         <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <link
           href="/icons/favicon-16x16.png"
           rel="icon"
