@@ -102,7 +102,7 @@ export default function Login() {
                 Phone number
               </label>
               <input
-                type="text"
+                type="tel"
                 inputMode="numeric"
                 name="phone"
                 id="phone"
