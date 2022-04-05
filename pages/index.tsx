@@ -1,59 +1,43 @@
-import styles from '../styles/Home.module.css'
+import { getUserProps } from "lib/user"
+import { InferGetServerSidePropsType } from "next"
+import * as React from "react"
+import { useRouter } from "next/router"
+import Err from "next/error"
 
-export default function Home() {
+export const getServerSideProps = getUserProps
+
+export default function Home({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [error, setError] = React.useState<Error | null>(null)
+  const router = useRouter()
+
+  const handleLogout = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    fetch("/api/auth/logout", {
+      method: "POST",
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/login")
+        } else {
+          const err = new Error("Failed to logout")
+          setError(err)
+        }
+      })
+      .catch((err: Error) => {
+        setError(err)
+      })
+  }
+
+  if (error) {
+    return <Err statusCode={500} title={error.message} />
+  }
+
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <div>
+      <h1>Welcome to Hack Equine!</h1>
+      <button onClick={handleLogout}>Sign out</button>
     </div>
   )
 }

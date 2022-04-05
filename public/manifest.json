@@ -1,8 +1,9 @@
 {
-  "name": "Next.JS Progressive Web App",
-  "short_name": "Next PWA",
+  "name": "Hack Equine",
+  "short_name": "Hack",
+  "description": "Hack Equine",
   "theme_color": "#ffffff",
-  "background_color": "#004740",
+  "background_color": "#465462",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",
