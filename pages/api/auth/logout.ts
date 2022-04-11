@@ -10,6 +10,10 @@ export default withIronSessionApiRoute(async (req, res) => {
   if (resp.status !== 200) {
     console.error("Logout failed.", resp)
   }
+  console.log({
+    logoutRespStatus: resp.status,
+    logoutRespStatusText: resp.statusText,
+  })
   req.session.destroy()
   res.status(resp.status).redirect("/login")
 }, sessionOptions)

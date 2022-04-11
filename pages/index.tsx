@@ -18,6 +18,7 @@ export default function Home({
       method: "POST",
     })
       .then((res) => {
+        console.log({ status: res.status })
         if (res.status === 200) {
           router.push("/login")
         } else {
