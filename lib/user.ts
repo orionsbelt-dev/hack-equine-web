@@ -3,7 +3,7 @@ import { withIronSessionSsr } from "iron-session/next"
 export type User = {
   id: number
   phone: number
-  sessionToken?: string
+  session_token?: string
 }
 
 export const sessionOptions = {
@@ -24,7 +24,7 @@ export const getUserProps = withIronSessionSsr(async function ({
   if (sessionToken && sessionToken.length > 0 && user) {
     req.session.user = {
       ...user,
-      sessionToken,
+      session_token: sessionToken,
     }
     await req.session.save()
   }

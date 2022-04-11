@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Lexend Giga";
+  font-family: "Lexend";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/LexendGiga-Regular.ttf");
+  src: url("/fonts/Lexend-Regular.ttf");
 }

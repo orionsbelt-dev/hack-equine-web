@@ -6,7 +6,7 @@ import { LockClosedIcon } from "@heroicons/react/solid"
 import Link from "next/link"
 import Loader from "components/loader"
 
-export default function Login() {
+export default function SignUp() {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [modalOpen, setModalOpen] = React.useState<boolean>(false)
   const [error, setError] = React.useState<Error | null>(null)
@@ -17,12 +17,16 @@ export default function Login() {
   const handleLogin = (e: React.SyntheticEvent) => {
     e.preventDefault()
     const target = e.target as typeof e.target & {
+      name: { value: string }
+      email: { value: string }
       phone: { value: number }
     }
     setLoading(true)
-    fetch("/api/auth/login", {
+    fetch("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({
+        name: target.name.value,
+        email: target.email.value,
         phone: target.phone.value,
       }),
     })
@@ -30,7 +34,7 @@ export default function Login() {
         if (res.status === 200) {
           setModalOpen(true)
         } else {
-          const err = new Error("Failed to login")
+          const err = new Error("Failed to sign up")
           setError(err)
         }
         setLoading(false)
@@ -85,18 +89,46 @@ export default function Login() {
         <div className="max-w-lg w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-black">
-              Sign in to your account
+              Sign up for an account
             </h2>
             <p className="mt-2 text-center text-sm text-black">
               Or{" "}
-              <Link href="/signup">
+              <Link href="/login">
                 <a className="font-bold text-slate-600 hover:text-slate-500">
-                  sign up
+                  sign in
                 </a>
               </Link>
             </p>
           </div>
           <form onSubmit={handleLogin} className="mt-8 space-y-6">
+            <div className="rounded-md shadow-sm -space-y-px">
+              <label htmlFor="name" className="sr-only">
+                Name
+              </label>
+              <input
+                type="text"
+                inputMode="text"
+                name="name"
+                id="name"
+                autoComplete="name"
+                placeholder="Full name"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
+              />
+            </div>
+            <div className="rounded-md shadow-sm -space-y-px">
+              <label htmlFor="email" className="sr-only">
+                Email
+              </label>
+              <input
+                type="text"
+                inputMode="email"
+                name="email"
+                id="email"
+                autoComplete="email"
+                placeholder="Email address"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
+              />
+            </div>
             <div className="rounded-md shadow-sm -space-y-px">
               <label htmlFor="phone" className="sr-only">
                 Phone number
@@ -121,7 +153,7 @@ export default function Login() {
                   aria-hidden="true"
                 />
               </span>
-              Sign in
+              Sign up
             </button>
           </form>
 
