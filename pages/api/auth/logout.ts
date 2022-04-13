@@ -15,5 +15,5 @@ export default withIronSessionApiRoute(async (req, res) => {
     logoutRespStatusText: resp.statusText,
   })
   req.session.destroy()
-  res.status(resp.status).redirect("/login")
+  res.status(resp.status).redirect(302, "/login")
 }, sessionOptions)
