@@ -19,3 +19,7 @@ export const apiRequest = (
     body,
   })
 }
+
+export function insertAt(array: Array<any>, index: number, item: any) {
+  array.splice(index, 0, item)
+}
